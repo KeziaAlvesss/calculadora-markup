@@ -435,9 +435,18 @@ col_titulo, col_frete, col_aliq, col_prazo, col_logo = st.columns([2.3, 1, 1, 1,
 with col_titulo:
     st.markdown('<div class="titulo-tabela">TABELA MARCAÇÃO DE PRODUTOS</div>', unsafe_allow_html=True)
 with col_frete:
-    frete = st.text_input("Frete:", value="")
+    frete = st.selectbox(
+        "Frete:",
+        options=["", "CIF", "FOB"],
+        format_func=lambda x: x if x else "-- Selecione --",
+        key="campo_frete"
+    )
 with col_aliq:
-    aliquota = st.text_input("Alíquota:", value="")
+    aliquota_valor = st.number_input(
+        "Alíquota (%):", min_value=0.0, max_value=100.0, value=0.0, step=0.5,
+        format="%.1f", key="campo_aliquota"
+    )
+    aliquota = f"{aliquota_valor:.1f}%".replace(".0%", "%")
 with col_prazo:
     prazo = st.text_input("Prazo:", value="")
 with col_logo:
